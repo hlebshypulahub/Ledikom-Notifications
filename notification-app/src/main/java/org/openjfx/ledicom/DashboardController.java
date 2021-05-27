@@ -9,9 +9,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.openjfx.ledicom.entities.Employee;
+import org.openjfx.ledicom.entities.EmployeeContract;
 import org.openjfx.utilities.database.DatabaseController;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -22,10 +24,10 @@ public class DashboardController implements Initializable {
     private AnchorPane rootPane;
 
     @FXML
-    private TableView<Employee> table;
+    private TableView<Employee> dobTable;
 
     @FXML
-    private TableColumn<Employee, String> nameCol;
+    private TableColumn<Employee, String> nameColD;
 
     @FXML
     private TableColumn<Employee, String> dobCol;
@@ -33,24 +35,45 @@ public class DashboardController implements Initializable {
     @FXML
     private TableColumn<Employee, String> ageCol;
 
+    @FXML
+    private TableView<EmployeeContract> contractTable;
+
+    @FXML
+    private TableColumn<EmployeeContract, String> nameColC;
+
+    @FXML
+    private TableColumn<EmployeeContract, String> contractCol;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColD.setCellValueFactory(new PropertyValueFactory<>("name"));
         dobCol.setCellValueFactory(new PropertyValueFactory<>("DOB"));
         ageCol.setCellValueFactory(new PropertyValueFactory<>("dobAge"));
+
+        nameColC.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
+        contractCol.setCellValueFactory(new PropertyValueFactory<>("contractFullInfo"));
+
         if (LocalDate.now().getDayOfWeek() == DayOfWeek.FRIDAY) {
-            table.setPlaceholder(new Label("Сегодня и на выходных дней рождения у сотрудников нет!"));
+            dobTable.setPlaceholder(new Label("Сегодня и на выходных дней рождения у сотрудников нет!"));
         } else {
-            table.setPlaceholder(new Label("Сегодня дней рождения у сотрудников нет!"));
+            dobTable.setPlaceholder(new Label("Сегодня дней рождения у сотрудников нет!"));
+        }
+        contractTable.setPlaceholder(new Label("В течение ближайших 60 дней ни у одного сотрудника контракт не заканчивается!"));
+
+        ObservableList<Employee> employeeList;
+        try {
+            employeeList = DatabaseController.dobNotificationsEmployeeList();
+            dobTable.setItems(employeeList);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
 
-        ObservableList<Employee> employeeList = DatabaseController.dobNotificationsEmployeeList();
-        table.setItems(employeeList);
-
-//        if (employeeList.isEmpty()) {
-//            Platform.exit();
-//        } else {
-//            table.setItems(employeeList);
-//        }
+        ObservableList<EmployeeContract> employeeContractList;
+        try {
+            employeeContractList = DatabaseController.employeeContractList();
+            contractTable.setItems(employeeContractList);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }

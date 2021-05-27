@@ -6,19 +6,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="178.0" prefWidth="420.0" style="-fx-background-color: #ffcccc;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.ledicom.DashboardController">
+<AnchorPane fx:id="rootPane" prefHeight="370.0" prefWidth="550.0" style="-fx-background-color: #ffcccc;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.ledicom.DashboardController">
    <children>
-      <TableView fx:id="table" layoutX="9.0" layoutY="35.0" prefHeight="134.0" prefWidth="402.0" stylesheets="@style.css">
+      <TableView fx:id="dobTable" layoutX="10.0" layoutY="35.0" prefHeight="134.0" prefWidth="530.0" stylesheets="@style.css">
          <columns>
-            <TableColumn fx:id="nameCol" prefWidth="179.0" text="ФИО" />
-            <TableColumn fx:id="dobCol" prefWidth="110.0" styleClass="center-table-column" text="Дата рождения" />
-            <TableColumn fx:id="ageCol" prefWidth="92.0" styleClass="center-table-column" text="Исп. лет" />
+            <TableColumn fx:id="nameColD" prefWidth="160.0" text="ФИО" />
+            <TableColumn fx:id="dobCol" prefWidth="160.0" styleClass="center-table-column" text="Дата рождения" />
+            <TableColumn fx:id="ageCol" prefWidth="190.0" styleClass="center-table-column" text="Исп. лет" />
          </columns>
       </TableView>
-      <Label layoutX="129.0" layoutY="2.0" text="Дни рождения" textFill="#0f009c">
+      <Label layoutX="194.0" layoutY="2.0" text="Дни рождения" textFill="#0f009c">
          <font>
             <Font name="Calibri Bold" size="25.0" />
          </font>
       </Label>
+      <Label layoutX="217.0" layoutY="191.0" text="Контракты" textFill="#0f009c">
+         <font>
+            <Font name="Calibri Bold" size="25.0" />
+         </font>
+      </Label>
+      <TableView fx:id="contractTable" layoutX="10.0" layoutY="226.0" prefHeight="134.0" prefWidth="530.0" stylesheets="@style.css">
+         <columns>
+            <TableColumn fx:id="nameColC" prefWidth="160.0" text="ФИО" />
+            <TableColumn fx:id="contractCol" prefWidth="350.0" styleClass="center-table-column" text="Контракт" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

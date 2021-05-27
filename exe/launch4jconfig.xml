@@ -2,8 +2,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>C:\Users\hlebs\Desktop\Ledikom-App\exe\bin\Ledikom-Manager.jar</jar>
-  <outfile>C:\Users\hlebs\Desktop\Ledikom-App\exe\Ledikom-Manager.exe</outfile>
+  <jar>C:\Users\hlebs\Desktop\Ledikom\Ledikom-Notifications\exe\bin\Ledikom-Notifier.jar</jar>
+  <outfile>C:\Users\hlebs\Desktop\Ledikom\Ledikom-Notifications\exe\Ledikom-Notifier.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
@@ -13,7 +13,7 @@
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>
   <manifest></manifest>
-  <icon>C:\Users\hlebs\Desktop\Ledikom-App\icon.ico</icon>
+  <icon>C:\Users\hlebs\Desktop\Ledikom\icon.ico</icon>
   <jre>
     <path>bin\jre</path>
     <bundledJre64Bit>true</bundledJre64Bit>
@@ -30,10 +30,10 @@
     <copyright>Ledikom Apps</copyright>
     <productVersion>1.0.0.0</productVersion>
     <txtProductVersion>1.0.RC1</txtProductVersion>
-    <productName>Ledikom Manager</productName>
+    <productName>Ledikom Notifier</productName>
     <companyName>Ledikom</companyName>
-    <internalName>Ledikom-Manager</internalName>
-    <originalFilename>Ledikom-Manager.exe</originalFilename>
+    <internalName>Ledikom-Notifier</internalName>
+    <originalFilename>Ledikom-Notifier.exe</originalFilename>
     <trademarks></trademarks>
     <language>ENGLISH_US</language>
   </versionInfo>

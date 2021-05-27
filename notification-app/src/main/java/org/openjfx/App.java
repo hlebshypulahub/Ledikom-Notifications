@@ -8,17 +8,25 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class App extends Application {
 
     private static Scene scene;
 
     @Override
-    public void start(Stage stage) throws IOException, SQLException {
+    public void start(Stage stage) throws IOException, InterruptedException {
+        int x = 1;
+        while (x != 0) {
+            Process process = java.lang.Runtime.getRuntime().exec("ping www.google.com");
+            x = process.waitFor();
+            if (x != 0) {
+                Thread.sleep(1000);
+            }
+        }
+
         scene = new Scene(loadFXML("/org/openjfx/ledicom/dashboard"));
         stage.setScene(scene);
-        stage.setTitle("Ледиком ДР");
+        stage.setTitle("Ледиком Уведомления");
         stage.show();
         stage.setResizable(false);
         stage.getIcons().add(new Image(App.class.getResourceAsStream("/org/openjfx/ledicom/icon.png")));

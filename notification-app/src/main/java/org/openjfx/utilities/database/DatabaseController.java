@@ -3,6 +3,7 @@ package org.openjfx.utilities.database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.openjfx.ledicom.entities.Employee;
+import org.openjfx.ledicom.entities.EmployeeContract;
 import org.openjfx.utilities.converters.SqlDateStringConverter;
 
 import java.io.FileNotFoundException;
@@ -48,7 +49,6 @@ public class DatabaseController {
 
             try {
                 conn = DriverManager.getConnection(dbURL, dbUser, dbPassword);
-                System.out.print("Connected to the PostgreSQL server successfully");
             } catch (SQLException e) {
                 showMessageDialog(null, e.getMessage());
                 System.out.println(e.getMessage());
@@ -61,12 +61,12 @@ public class DatabaseController {
         return conn;
     }
 
-    public static ObservableList<Employee> dobNotificationsEmployeeList() {
+    public static ObservableList<Employee> dobNotificationsEmployeeList() throws SQLException {
         String sql = "select * from get_employee_dob_notifications();";
         return employeeList(sql);
     }
 
-    public static ObservableList<Employee> employeeList(String sql) {
+    public static ObservableList<Employee> employeeList(String sql) throws SQLException {
         ObservableList<Employee> employeeList = FXCollections.observableArrayList();
 
         try (   Connection conn = connect();
@@ -83,7 +83,31 @@ public class DatabaseController {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             showMessageDialog(null, e.getMessage());
-            return null;
+            throw e;
+        }
+    }
+
+    public static ObservableList<EmployeeContract> employeeContractList() throws SQLException {
+        String sql = "select * from get_employee_contract_notifications();";
+
+        ObservableList<EmployeeContract> employeeContractList = FXCollections.observableArrayList();
+
+        try (   Connection conn = connect();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                EmployeeContract employeeContract = new EmployeeContract();
+                employeeContract.setEmployeeName(rs.getString("out_employee_name"));
+                employeeContract.setContractFullInfo(SqlDateStringConverter.sqlDateToString(rs.getDate("out_start_date"))
+                        + " - " + SqlDateStringConverter.sqlDateToString(rs.getDate("out_expiration_date"))
+                        + " (" + rs.getString("out_contract_info") + ")");
+                employeeContractList.add(employeeContract);
+            }
+            return employeeContractList;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            showMessageDialog(null, e.getMessage());
+            throw e;
         }
     }
 }
