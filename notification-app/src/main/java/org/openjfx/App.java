@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class App extends Application {
 
@@ -20,7 +21,7 @@ public class App extends Application {
             Process process = java.lang.Runtime.getRuntime().exec("ping www.google.com");
             x = process.waitFor();
             if (x != 0) {
-                Thread.sleep(1000);
+                Thread.sleep(15000);
             }
         }
 
@@ -29,7 +30,7 @@ public class App extends Application {
         stage.setTitle("Ледиком Уведомления");
         stage.show();
         stage.setResizable(false);
-        stage.getIcons().add(new Image(App.class.getResourceAsStream("/org/openjfx/ledicom/icon.png")));
+        stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("/org/openjfx/ledicom/icon.png"))));
     }
 
     static void setRoot(String fxml) throws IOException {

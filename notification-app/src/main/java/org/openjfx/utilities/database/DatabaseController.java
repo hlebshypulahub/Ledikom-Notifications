@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.openjfx.ledicom.entities.Employee;
 import org.openjfx.ledicom.entities.EmployeeContract;
+import org.openjfx.ledicom.entities.Task;
 import org.openjfx.utilities.converters.SqlDateStringConverter;
 
 import java.io.FileNotFoundException;
@@ -35,17 +36,17 @@ public class DatabaseController {
             }
 
 //            /// EXTERNAL
-            dbURL = prop.getProperty("externalURL");
-            dbUser = prop.getProperty("externalUser");
-            dbPassword = prop.getProperty("externalPassword");
+//            dbURL = prop.getProperty("externalURL");
+//            dbUser = prop.getProperty("externalUser");
+//            dbPassword = prop.getProperty("externalPassword");
 //            /// INTERNAL
 //            dbURL = prop.getProperty("internalURL");
 //            dbUser = prop.getProperty("internalUser");
 //            dbPassword = prop.getProperty("internalPassword");
             /// LOCAL
-//            dbURL = prop.getProperty("localURL");
-//            dbUser = prop.getProperty("localUser");
-//            dbPassword = prop.getProperty("localPassword");
+            dbURL = prop.getProperty("localURL");
+            dbUser = prop.getProperty("localUser");
+            dbPassword = prop.getProperty("localPassword");
 
             try {
                 conn = DriverManager.getConnection(dbURL, dbUser, dbPassword);
@@ -69,8 +70,8 @@ public class DatabaseController {
     public static ObservableList<Employee> employeeList(String sql) throws SQLException {
         ObservableList<Employee> employeeList = FXCollections.observableArrayList();
 
-        try (   Connection conn = connect();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Employee employee = new Employee();
@@ -92,8 +93,8 @@ public class DatabaseController {
 
         ObservableList<EmployeeContract> employeeContractList = FXCollections.observableArrayList();
 
-        try (   Connection conn = connect();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 EmployeeContract employeeContract = new EmployeeContract();
@@ -107,6 +108,66 @@ public class DatabaseController {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             showMessageDialog(null, e.getMessage());
+            throw e;
+        }
+    }
+
+    public static ObservableList<Task> employeeTasks() throws SQLException {
+        String sql = "select * from task order by date;";
+
+        ObservableList<Task> observableList = FXCollections.observableArrayList();
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Task task = new Task();
+                task.setId(rs.getInt("id_task"));
+                task.setEmployee(getEmployee(rs.getInt("id_employee")));
+                task.setDate(SqlDateStringConverter.sqlDateToString(rs.getDate("date")));
+                task.setTask(rs.getString("description"));
+                observableList.add(task);
+            }
+            return observableList;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            showMessageDialog(null, e.getMessage());
+            throw e;
+        }
+    }
+
+    public static Employee getEmployee(int employeeId) {
+        String sql = "SELECT * FROM employee_data_view WHERE id_employee = " + employeeId + ";";
+
+        Employee employee = new Employee();
+
+        try (
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                employee.setName(rs.getString("last_name") + " "
+                        + rs.getString("first_name").charAt(0) + ". "
+                        + rs.getString("patronymic").charAt(0) + ".");
+            }
+            return employee;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            showMessageDialog(null, e.getMessage());
+            return null;
+        }
+    }
+
+    public static void deleteTask(int id) throws SQLException {
+        String sql = "delete from task where id_task = " + id;
+
+        psExecute(sql);
+    }
+
+    public static void psExecute(String sql) throws SQLException {
+        try (
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw e;
         }
     }
