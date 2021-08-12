@@ -6,44 +6,44 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="687.0" prefWidth="711.0" style="-fx-background-color: #ffcccc;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.ledicom.DashboardController">
+<AnchorPane fx:id="rootPane" prefHeight="687.0" prefWidth="710.0" style="-fx-background-color: #ffcccc;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.ledicom.DashboardController">
    <children>
-      <TableView fx:id="dobTable" layoutX="11.0" layoutY="37.0" prefHeight="134.0" prefWidth="690.0" stylesheets="@style.css">
+      <TableView fx:id="dobTable" layoutX="10.0" layoutY="37.0" prefHeight="134.0" prefWidth="690.0" stylesheets="@style.css">
          <columns>
             <TableColumn fx:id="nameColD" prefWidth="190.0" text="ФИО" />
             <TableColumn fx:id="dobCol" prefWidth="276.0" styleClass="center-table-column" text="Дата рождения" />
             <TableColumn fx:id="ageCol" prefWidth="208.0" styleClass="center-table-column" text="Исп. лет" />
          </columns>
       </TableView>
-      <Label layoutX="275.0" layoutY="2.0" text="Дни рождения" textFill="#0f009c">
+      <Label layoutX="274.0" layoutY="2.0" text="Дни рождения" textFill="#0f009c">
          <font>
             <Font name="Calibri Bold" size="25.0" />
          </font>
       </Label>
-      <Label layoutX="297.0" layoutY="191.0" text="Контракты" textFill="#0f009c">
+      <Label layoutX="296.0" layoutY="191.0" text="Контракты" textFill="#0f009c">
          <font>
             <Font name="Calibri Bold" size="25.0" />
          </font>
       </Label>
-      <TableView fx:id="contractTable" layoutX="11.0" layoutY="226.0" prefHeight="134.0" prefWidth="690.0" stylesheets="@style.css">
+      <TableView fx:id="contractTable" layoutX="10.0" layoutY="226.0" prefHeight="134.0" prefWidth="690.0" stylesheets="@style.css">
          <columns>
             <TableColumn fx:id="nameColC" prefWidth="190.0" text="ФИО" />
             <TableColumn fx:id="contractCol" prefWidth="484.0" styleClass="center-table-column" text="Контракт" />
          </columns>
       </TableView>
-      <TableView fx:id="taskTable" layoutX="12.0" layoutY="415.0" prefHeight="244.0" prefWidth="690.0" stylesheets="@style.css">
+      <TableView fx:id="taskTable" layoutX="10.0" layoutY="415.0" prefHeight="244.0" prefWidth="690.0" stylesheets="@style.css">
          <columns>
             <TableColumn fx:id="nameColT" prefWidth="190.0" text="ФИО" />
             <TableColumn fx:id="dateColT" prefWidth="117.0" text="Срок исполнения" />
             <TableColumn fx:id="taskColT" prefWidth="367.0" text="Поручение" />
          </columns>
       </TableView>
-      <Label layoutX="296.0" layoutY="380.0" text="Поручения" textFill="#0f009c">
+      <Label layoutX="295.0" layoutY="380.0" text="Поручения" textFill="#0f009c">
          <font>
             <Font name="Calibri Bold" size="25.0" />
          </font>
       </Label>
-      <Label layoutX="165.0" layoutY="659.0" prefHeight="17.0" prefWidth="536.0" text="* Для удаления поручения после выполнения нажать правой кнопкой мыши на строку и выбрать опцию &quot;Удалить&quot;">
+      <Label layoutX="163.0" layoutY="659.0" prefHeight="17.0" prefWidth="536.0" text="* Для удаления поручения после выполнения нажать правой кнопкой мыши на строку и выбрать опцию &quot;Удалить&quot;">
          <font>
             <Font size="10.0" />
          </font>

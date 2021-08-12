@@ -6,8 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.openjfx.utilities.database.DatabaseController;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class App extends Application {
@@ -31,6 +33,15 @@ public class App extends Application {
         stage.show();
         stage.setResizable(false);
         stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("/org/openjfx/ledicom/icon.png"))));
+
+        stage.setOnCloseRequest(event -> {
+            try {
+                DatabaseController.close();
+                System.exit(0);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     static void setRoot(String fxml) throws IOException {

@@ -62,6 +62,10 @@ public class DatabaseController {
         return conn;
     }
 
+    public static void close() throws SQLException {
+        conn.close();
+    }
+
     public static ObservableList<Employee> dobNotificationsEmployeeList() throws SQLException {
         String sql = "select * from get_employee_dob_notifications();";
         return employeeList(sql);
